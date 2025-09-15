@@ -1,0 +1,19 @@
+# Server Configuration
+server:
+  port: 8088
+
+# Spring Configuration
+spring:
+  application:
+    name: back-blog
+
+# Logging Configuration
+logging:
+  level:
+    org:
+      springframework: INFO
+    com:
+      example:
+        backblog: DEBUG
+
+
