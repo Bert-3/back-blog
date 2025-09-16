@@ -6,6 +6,58 @@ server:
 spring:
   application:
     name: back-blog
+  # 数据源配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://101.43.181.182:3306/blog?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root123456
+  # 激活的环境
+  profiles:
+    active: dev
+
+# MyBatis-Plus 配置
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.example.backblog.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted  # 全局逻辑删除字段
+      logic-delete-value: 1        # 逻辑已删除值
+      logic-not-delete-value: 0    # 逻辑未删除值
+
+# JWT 配置
+jwt:
+  # JWT加解密使用的密钥
+  secret: 6MNSobBRCHGIO0fS6MNSobBRCHGIO0fS6MNSobBRCHGIO0fS
+  # JWT的有效期（单位：秒）
+  expiration: 86400
+
+# Knife4j 配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.example.backblog.controller
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    swagger-model-name: 实体类列表
+    enable-swagger-models: true
+    enable-document-manage: true
+    enable-home-custom: false
+    enable-footer-custom: false
+    enable-footer: false
 
 # Logging Configuration
 logging:
@@ -15,5 +67,6 @@ logging:
     com:
       example:
         backblog: DEBUG
+    com.baomidou.mybatisplus: DEBUG
 
 
