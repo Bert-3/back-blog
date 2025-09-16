@@ -2,9 +2,16 @@ package com.example.backblog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.backblog.common.Result;
+import com.example.backblog.constants.UserStatusConstants;
 import com.example.backblog.entity.User;
+import com.example.backblog.enums.StatusEnums;
 import com.example.backblog.mapper.UserMapper;
 import com.example.backblog.service.UserService;
+import com.example.backblog.util.BCryptPasswordUtil;
+import com.example.backblog.util.JwtUtils;
+import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,7 +19,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
-
+    @Autowired
+    private BCryptPasswordUtil bCryptPasswordUtil;
+    @Autowired
+    private JwtUtils jwtUtils;
     @Override
     public User getByUsername(String username) {
         return getOne(new LambdaQueryWrapper<User>()
@@ -31,6 +41,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setId(userId);
         user.setStatus(status);
         return updateById(user);
+    }
+
+    @Override
+    public Result login(String username, String password) {
+        User user = lambdaQuery()
+                .eq(username != null, User::getUsername, username)
+                .one();
+        if (user == null) {
+            return Result.error(StatusEnums.USER_NOT_FOUND.getCode(),StatusEnums.USER_NOT_FOUND.getMessage());
+        }
+        if (!bCryptPasswordUtil.matches(password, user.getPassword())) {
+            return Result.error(StatusEnums.USERNAME_OR_PASSWORD_ERROR.getCode(),StatusEnums.USERNAME_OR_PASSWORD_ERROR.getMessage());
+        }
+        if (!user.getStatus().equals(UserStatusConstants.ACTIVE)) {
+            return Result.error(StatusEnums.ACCOUNT_LOCKED.getCode(),StatusEnums.ACCOUNT_LOCKED.getMessage());
+        }
+        return Result.success(jwtUtils.generateToken(user));
     }
 }
 

@@ -1,6 +1,7 @@
 package com.example.backblog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.backblog.common.Result;
 import com.example.backblog.entity.User;
 
 /**
@@ -29,5 +30,8 @@ public interface UserService extends IService<User> {
      * @return 是否成功
      */
     boolean updateStatus(Long userId, String status);
+
+    Result login(String username, String password);
+
 }
 

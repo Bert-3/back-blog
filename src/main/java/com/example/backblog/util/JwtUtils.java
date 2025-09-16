@@ -1,4 +1,4 @@
-package com.example.backblog.security;
+package com.example.backblog.util;
 
 import com.example.backblog.entity.User;
 import io.jsonwebtoken.Claims;
