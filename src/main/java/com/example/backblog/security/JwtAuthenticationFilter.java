@@ -1,5 +1,6 @@
 package com.example.backblog.security;
 
+import cn.hutool.core.util.StrUtil;
 import com.example.backblog.util.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -58,13 +59,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
      * 从请求头中解析JWT
      */
     private String parseJwt(HttpServletRequest request) {
-        String headerAuth = request.getHeader("Authorization");
-
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
-            return headerAuth.substring(7);
-        }
-
-        return null;
+        return request.getHeader("Authorization");
     }
 }
 

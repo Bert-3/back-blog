@@ -34,16 +34,13 @@ public class SecurityConfig {
                 // Knife4j相关接口
                 .requestMatchers("/doc.html", "/webjars/**", "/v3/api-docs/**").permitAll()
                 // 其他所有请求都需要认证
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
 }
 
