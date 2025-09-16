@@ -31,6 +31,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // 公开接口，不需要认证
                 .requestMatchers("/api/auth/**", "/api/public/**").permitAll()
+                // Knife4j相关接口
+                .requestMatchers("/doc.html", "/webjars/**", "/v3/api-docs/**").permitAll()
                 // 其他所有请求都需要认证
                 .anyRequest().permitAll()
             )

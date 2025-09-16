@@ -38,6 +38,27 @@ jwt:
   # JWT的有效期（单位：秒）
   expiration: 86400
 
+# Knife4j 配置
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.example.backblog.controller
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+    swagger-model-name: 实体类列表
+    enable-swagger-models: true
+    enable-document-manage: true
+    enable-home-custom: false
+    enable-footer-custom: false
+    enable-footer: false
+
 # Logging Configuration
 logging:
   level:
