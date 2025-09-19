@@ -1,15 +1,14 @@
 package com.example.backblog.controller;
 
 import com.example.backblog.common.Result;
+import com.example.backblog.dto.LoginDto;
 import com.example.backblog.util.JwtUtils;
 import com.example.backblog.service.UserService;
+import com.example.backblog.vo.LoginVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 认证控制器
@@ -26,8 +25,8 @@ public class AuthController {
      * 用户登录
      */
     @PostMapping("/login")
-    public Result login(@RequestParam String username, @RequestParam String password) {
-        return userService.login(username, password);
+    public Result login(@RequestBody LoginDto loginDto) {
+        return userService.login(loginDto.getUsername(), loginDto.getPassword());
     }
 }
 

@@ -10,6 +10,7 @@ import com.example.backblog.mapper.UserMapper;
 import com.example.backblog.service.UserService;
 import com.example.backblog.util.BCryptPasswordUtil;
 import com.example.backblog.util.JwtUtils;
+import com.example.backblog.vo.LoginVo;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,7 +58,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!user.getStatus().equals(UserStatusConstants.ACTIVE)) {
             return Result.error(StatusEnums.ACCOUNT_LOCKED.getCode(),StatusEnums.ACCOUNT_LOCKED.getMessage());
         }
-        return Result.success(jwtUtils.generateToken(user));
+        LoginVo loginVo = new LoginVo();
+        loginVo.setToken(jwtUtils.generateToken(user));
+        loginVo.setRole(user.getRole());
+        return Result.success(loginVo);
     }
 }
 

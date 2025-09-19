@@ -3,6 +3,7 @@ package com.example.backblog.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.backblog.common.Result;
 import com.example.backblog.entity.User;
+import com.example.backblog.vo.LoginVo;
 
 /**
  * 用户服务接口
